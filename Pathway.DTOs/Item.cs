@@ -13,5 +13,6 @@ namespace Pathway.DTOs
         public string SerialNumber { get; }
         public string Name { get; }
         public string Description { get; set; }
+        public double Price { get; set; }
     }
 }
