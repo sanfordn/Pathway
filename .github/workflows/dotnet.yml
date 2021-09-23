@@ -23,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore $SLN_LOCATION
     - name: Test
-      run: dotnet test --no-build --verbosity normal $SLN_LOCATION
+      run: dotnet test --no-build --verbosity normal
