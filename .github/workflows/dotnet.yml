@@ -19,8 +19,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ${SLN_LOCATION}
+      run: dotnet restore ${{ env.SLN_LOCATION }}
     - name: Build
-      run: dotnet build --no-restore ${SLN_LOCATION}
+      run: dotnet build --no-restore ${{ env.SLN_LOCATION }}
     - name: Test
-      run: dotnet test ${SLN_LOCATION} --no-build --verbosity normal
+      run: dotnet test ${{ env.SLN_LOCATION }} --no-build --verbosity normal
