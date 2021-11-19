@@ -1,16 +1,13 @@
 ﻿using Pathway.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Pathway.Application.Common.Interfaces
+namespace Pathway.Application.Common.Interfaces;
+
+public interface IApplicationDbContext
 {
-    public interface IApplicationDbContext
-    {
-        DbSet<TodoList> TodoLists { get; set; }
+    DbSet<TodoList> TodoLists { get; }
 
-        DbSet<TodoItem> TodoItems { get; set; }
+    DbSet<TodoItem> TodoItems { get; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-    }
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

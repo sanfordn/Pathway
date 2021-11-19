@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace Pathway.Application.Common.Interfaces;
 
-namespace Pathway.Application.Common.Interfaces
+public interface IDateTime
 {
-    public interface IDateTime
-    {
-        DateTime Now { get; }
-    }
+    DateTime Now { get; }
 }

@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace Pathway.Application.Common.Exceptions;
 
-namespace Pathway.Application.Common.Exceptions
+public class ForbiddenAccessException : Exception
 {
-    public class ForbiddenAccessException : Exception
-    {
-        public ForbiddenAccessException() : base() { }
-    }
+    public ForbiddenAccessException() : base() { }
 }

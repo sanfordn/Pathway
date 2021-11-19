@@ -2,41 +2,39 @@
 using Pathway.Application.Common.Interfaces;
 using Pathway.Domain.Entities;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Pathway.Application.TodoLists.Commands.UpdateTodoList
+namespace Pathway.Application.TodoLists.Commands.UpdateTodoList;
+
+public class UpdateTodoListCommand : IRequest
 {
-    public class UpdateTodoListCommand : IRequest
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Title { get; set; }
+    public string? Title { get; set; }
+}
+
+public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
+{
+    private readonly IApplicationDbContext _context;
+
+    public UpdateTodoListCommandHandler(IApplicationDbContext context)
+    {
+        _context = context;
     }
 
-    public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListCommand>
+    public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
+        var entity = await _context.TodoLists
+            .FindAsync(new object[] { request.Id }, cancellationToken);
 
-        public UpdateTodoListCommandHandler(IApplicationDbContext context)
+        if (entity == null)
         {
-            _context = context;
+            throw new NotFoundException(nameof(TodoList), request.Id);
         }
 
-        public async Task<Unit> Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoLists.FindAsync(request.Id);
+        entity.Title = request.Title;
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(TodoList), request.Id);
-            }
+        await _context.SaveChangesAsync(cancellationToken);
 
-            entity.Title = request.Title;
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

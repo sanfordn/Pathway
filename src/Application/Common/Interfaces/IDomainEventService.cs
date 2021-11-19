@@ -1,10 +1,8 @@
 ﻿using Pathway.Domain.Common;
-using System.Threading.Tasks;
 
-namespace Pathway.Application.Common.Interfaces
+namespace Pathway.Application.Common.Interfaces;
+
+public interface IDomainEventService
 {
-    public interface IDomainEventService
-    {
-        Task Publish(DomainEvent domainEvent);
-    }
+    Task Publish(DomainEvent domainEvent);
 }

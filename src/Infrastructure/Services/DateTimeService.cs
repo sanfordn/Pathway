@@ -1,10 +1,8 @@
 ﻿using Pathway.Application.Common.Interfaces;
-using System;
 
-namespace Pathway.Infrastructure.Services
+namespace Pathway.Infrastructure.Services;
+
+public class DateTimeService : IDateTime
 {
-    public class DateTimeService : IDateTime
-    {
-        public DateTime Now => DateTime.Now;
-    }
+    public DateTime Now => DateTime.Now;
 }

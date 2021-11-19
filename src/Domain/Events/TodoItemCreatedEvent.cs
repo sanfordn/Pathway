@@ -1,15 +1,11 @@
-﻿using Pathway.Domain.Common;
-using Pathway.Domain.Entities;
+﻿namespace Pathway.Domain.Events;
 
-namespace Pathway.Domain.Events
+public class TodoItemCreatedEvent : DomainEvent
 {
-    public class TodoItemCreatedEvent : DomainEvent
+    public TodoItemCreatedEvent(TodoItem item)
     {
-        public TodoItemCreatedEvent(TodoItem item)
-        {
-            Item = item;
-        }
-
-        public TodoItem Item { get; }
+        Item = item;
     }
+
+    public TodoItem Item { get; }
 }

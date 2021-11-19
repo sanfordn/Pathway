@@ -1,10 +1,8 @@
 ﻿using Pathway.Application.TodoLists.Queries.ExportTodos;
-using System.Collections.Generic;
 
-namespace Pathway.Application.Common.Interfaces
+namespace Pathway.Application.Common.Interfaces;
+
+public interface ICsvFileBuilder
 {
-    public interface ICsvFileBuilder
-    {
-        byte[] BuildTodoItemsFile(IEnumerable<TodoItemRecord> records);
-    }
+    byte[] BuildTodoItemsFile(IEnumerable<TodoItemRecord> records);
 }

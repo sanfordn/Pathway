@@ -1,8 +1,8 @@
 ﻿namespace Pathway.Domain.Events;
 
-public class TodoItemCompletedEvent : DomainEvent
+public class TodoItemDeletedEvent : DomainEvent
 {
-    public TodoItemCompletedEvent(TodoItem item)
+    public TodoItemDeletedEvent(TodoItem item)
     {
         Item = item;
     }

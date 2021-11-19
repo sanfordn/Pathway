@@ -3,47 +3,45 @@ using Pathway.Application.Common.Interfaces;
 using Pathway.Domain.Entities;
 using Pathway.Domain.Enums;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Pathway.Application.TodoItems.Commands.UpdateTodoItemDetail
+namespace Pathway.Application.TodoItems.Commands.UpdateTodoItemDetail;
+
+public class UpdateTodoItemDetailCommand : IRequest
 {
-    public class UpdateTodoItemDetailCommand : IRequest
+    public int Id { get; set; }
+
+    public int ListId { get; set; }
+
+    public PriorityLevel Priority { get; set; }
+
+    public string? Note { get; set; }
+}
+
+public class UpdateTodoItemDetailCommandHandler : IRequestHandler<UpdateTodoItemDetailCommand>
+{
+    private readonly IApplicationDbContext _context;
+
+    public UpdateTodoItemDetailCommandHandler(IApplicationDbContext context)
     {
-        public int Id { get; set; }
-
-        public int ListId { get; set; }
-
-        public PriorityLevel Priority { get; set; }
-
-        public string Note { get; set; }
+        _context = context;
     }
 
-    public class UpdateTodoItemDetailCommandHandler : IRequestHandler<UpdateTodoItemDetailCommand>
+    public async Task<Unit> Handle(UpdateTodoItemDetailCommand request, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
+        var entity = await _context.TodoItems
+            .FindAsync(new object[] { request.Id }, cancellationToken);
 
-        public UpdateTodoItemDetailCommandHandler(IApplicationDbContext context)
+        if (entity == null)
         {
-            _context = context;
+            throw new NotFoundException(nameof(TodoItem), request.Id);
         }
 
-        public async Task<Unit> Handle(UpdateTodoItemDetailCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoItems.FindAsync(request.Id);
+        entity.ListId = request.ListId;
+        entity.Priority = request.Priority;
+        entity.Note = request.Note;
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(TodoItem), request.Id);
-            }
+        await _context.SaveChangesAsync(cancellationToken);
 
-            entity.ListId = request.ListId;
-            entity.Priority = request.Priority;
-            entity.Note = request.Note;
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

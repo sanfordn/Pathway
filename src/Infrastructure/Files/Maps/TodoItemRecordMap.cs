@@ -1,15 +1,15 @@
-﻿using Pathway.Application.TodoLists.Queries.ExportTodos;
+﻿using System.Globalization;
+using Pathway.Application.TodoLists.Queries.ExportTodos;
 using CsvHelper.Configuration;
-using System.Globalization;
 
-namespace Pathway.Infrastructure.Files.Maps
+namespace Pathway.Infrastructure.Files.Maps;
+
+public class TodoItemRecordMap : ClassMap<TodoItemRecord>
 {
-    public class TodoItemRecordMap : ClassMap<TodoItemRecord>
+    public TodoItemRecordMap()
     {
-        public TodoItemRecordMap()
-        {
-            AutoMap(CultureInfo.InvariantCulture);
-            Map(m => m.Done).ConvertUsing(c => c.Done ? "Yes" : "No");
-        }
+        AutoMap(CultureInfo.InvariantCulture);
+
+        Map(m => m.Done).ConvertUsing(c => c.Done ? "Yes" : "No");
     }
 }
